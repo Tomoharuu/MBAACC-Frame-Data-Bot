@@ -7,11 +7,11 @@ import pandas as pd
 with open('bot_token.txt', 'r', encoding='utf-8') as f:
     token = f.read()
 
-df = pd.read_csv("all_characters.csv")
+df = pd.read_csv("https://raw.githubusercontent.com/Tomoharuu/MBAACC-Frame-Data-Bot/refs/heads/main/all_characters.csv")
 intents = discord.Intents.all()
 
 bot = commands.Bot(".", intents=intents)
-2
+
 @bot.event 
 async def on_ready():
     await bot.tree.sync()
@@ -80,8 +80,34 @@ async def move_autocomplete(interact:discord.Interaction, pesquisa:str):
     return opcoes[:25]
 
 
+# Testando comando com AutoComplete
+@bot.hybrid_command()
+async def echo(ctx: commands.Context, color: str):
+    await ctx.send(color)
+
+@echo.autocomplete("color")
+async def color_autocomplete(interaction: discord.Interaction, current: str) -> list[app_commands.Choice[str]]:
+    options = ["Red", "Green", "Blue"]
+    return [app_commands.Choice(name=option, value=option) for option in options if option.lower().startswith(current.lower())][:25]
 
 
+
+# Testando comando sem slash
+def normalizar(texto):
+    texto = texto.replace(".", "")
+
+    if texto[1:-1].isdigit():
+        return f"{texto[0].lower()}.{texto[1:-1]}{texto[-1].upper()}"
+
+    if texto[:-1].isdigit():
+        return f"{texto[:-1]}{texto[-1].upper()}"
+
+    return f"{texto[0].lower()}.{texto[1].upper()}"
+
+@bot.command()
+async def framedata(ctx:commands.Context, char:str, move:str):
+    view = MoveDisplay(char.title(), normalizar(move))
+    await ctx.send(view=view)
 
 
 class MoveDisplay(ui.LayoutView):
