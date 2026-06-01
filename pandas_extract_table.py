@@ -7,8 +7,10 @@ def extract_numpad(string):
 	p = re.compile('^(j.)?([1-9]+)')
 	m = p.match(string)
 	if m:
+		if len(m.group(0)) == 1:
+			return ""
 		return m.group(0)
-	return None
+	return ""
 
 #characters = ["Akiha Tohno", "Aoko Aozaki", "Arcueid Brunestud", "Ciel", "Archetype: Earth", "Hisui", "Koha & Mech", "Kohaku", "Kouma Kishima", "Len", "Mech-Hisui", "Miyako Arima", "Neco-Arc Chaos", "Shiki Nanaya", "Hisui & Kohaku", "Neco-Arc", "Neco & Mech", "Nero Chaos", "Powered Ciel", "Red Arcueid", "Riesbyfe Stridberg", "Roa", "Shiki Ryougi", "Satsuki Yumizuka", "Akiha Tohno (Seifuku)", "Sion Eltnam Atlasia", "Shiki Tohno", "Akiha Vermilion", "Sion TATARI", "Warachia", "White Len"]
 #moons = ["Full_Moon", "Half_Moon", "Crescent_Moon"]
