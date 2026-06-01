@@ -155,7 +155,7 @@ for character in characters:
 							#print("IS LAST ARC")
 							move_name = "Last Arc"
 
-						if "A+B+C during" in smalltext:
+						if "A+B+C" in smalltext:
 							move_name = "Heat Activation"
 
 					#print("move_name =", move_name)
